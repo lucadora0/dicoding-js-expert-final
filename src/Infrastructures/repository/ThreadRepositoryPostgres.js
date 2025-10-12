@@ -35,6 +35,28 @@ class ThreadRepositoryPostgres extends ThreadRepository {
       throw new NotFoundError('thread tidak ditemukan');
     }
   }
+
+  async getThreadById(threadId) {
+    const query = {
+      text: `SELECT threads.id, threads.title, threads.body, threads.date, users.username
+             FROM threads
+             INNER JOIN users ON threads.owner = users.id
+             WHERE threads.id = $1`,
+      values: [threadId],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rowCount) {
+      throw new NotFoundError('thread tidak ditemukan');
+    }
+
+    const thread = result.rows[0];
+    return {
+      ...thread,
+      date: thread.date.toISOString(),
+    };
+  }
 }
 
 module.exports = ThreadRepositoryPostgres;

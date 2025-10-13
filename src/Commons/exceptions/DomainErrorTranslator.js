@@ -21,6 +21,18 @@ DomainErrorTranslator._directories = {
   'ADD_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat thread baru karena tipe data tidak sesuai'),
   'ADD_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat membuat comment baru karena properti yang dibutuhkan tidak ada'),
   'ADD_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat comment baru karena tipe data tidak sesuai'),
+  'ADDED_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat membuat added comment karena properti yang dibutuhkan tidak ada'),
+  'ADDED_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat added comment karena tipe data tidak sesuai'),
+  'ADDED_THREAD.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat membuat added thread karena properti yang dibutuhkan tidak ada'),
+  'ADDED_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat added thread karena tipe data tidak sesuai'),
+  'REGISTERED_USER.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat membuat registered user karena properti yang dibutuhkan tidak ada'),
+  'REGISTERED_USER.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat registered user karena tipe data tidak sesuai'),
+  'NEW_AUTH.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat membuat authentication baru karena properti yang dibutuhkan tidak ada'),
+  'NEW_AUTH.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat authentication baru karena tipe data tidak sesuai'),
+  'DETAIL_THREAD.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat membuat detail thread karena properti yang dibutuhkan tidak ada'),
+  'DETAIL_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat detail thread karena tipe data tidak sesuai'),
+  'COMMENT.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat membuat comment karena properti yang dibutuhkan tidak ada'),
+  'COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat comment karena tipe data tidak sesuai'),
 };
 
 module.exports = DomainErrorTranslator;

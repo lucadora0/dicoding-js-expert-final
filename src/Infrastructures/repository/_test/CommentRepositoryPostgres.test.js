@@ -173,11 +173,11 @@ describe('CommentRepositoryPostgres', () => {
       expect(comments[0].username).toEqual('dicoding');
       expect(comments[0].content).toEqual('first comment');
       expect(comments[0].is_delete).toEqual(false);
-      expect(typeof comments[0].date).toEqual('string');
+      expect(comments[0].date).toBeInstanceOf(Date);
       expect(comments[1].id).toEqual('comment-456');
       expect(comments[1].username).toEqual('johndoe');
       expect(comments[1].is_delete).toEqual(true);
-      expect(typeof comments[1].date).toEqual('string');
+      expect(comments[1].date).toBeInstanceOf(Date);
     });
 
     it('should return empty array when no comments found', async () => {

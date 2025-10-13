@@ -15,7 +15,7 @@ describe('GetThreadUseCase', () => {
       id: 'thread-123',
       title: 'sebuah thread',
       body: 'sebuah body thread',
-      date: '2021-08-08T07:19:09.775Z',
+      date: new Date('2021-08-08T07:19:09.775Z'),
       username: 'dicoding',
     };
 
@@ -23,14 +23,14 @@ describe('GetThreadUseCase', () => {
       {
         id: 'comment-123',
         username: 'johndoe',
-        date: '2021-08-08T07:22:33.555Z',
+        date: new Date('2021-08-08T07:22:33.555Z'),
         content: 'sebuah comment',
         is_delete: false,
       },
       {
         id: 'comment-456',
         username: 'dicoding',
-        date: '2021-08-08T07:26:21.338Z',
+        date: new Date('2021-08-08T07:26:21.338Z'),
         content: 'deleted comment',
         is_delete: true,
       },

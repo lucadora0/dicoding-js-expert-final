@@ -76,10 +76,7 @@ class CommentRepositoryPostgres extends CommentRepository {
     };
 
     const result = await this._pool.query(query);
-    return result.rows.map((comment) => ({
-      ...comment,
-      date: comment.date.toISOString(),
-    }));
+    return result.rows;
   }
 }
 

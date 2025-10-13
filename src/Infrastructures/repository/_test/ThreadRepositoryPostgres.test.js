@@ -111,7 +111,7 @@ describe('ThreadRepositoryPostgres', () => {
       expect(thread.body).toEqual('sebuah body thread');
       expect(thread.username).toEqual('dicoding');
       expect(thread.date).toBeDefined();
-      expect(typeof thread.date).toEqual('string');
+      expect(thread.date).toBeInstanceOf(Date);
     });
   });
 });

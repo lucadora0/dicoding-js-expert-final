@@ -1,0 +1,87 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.5.4
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Add SSH host to known_hosts
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+    - name: Deploy to VM
+      run: |
+        ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          # Navigate to app directory
+          cd /var/www/forum-api
+
+          # Pull latest code from master
+          if [ -d ".git" ]; then
+            git pull origin master
+          else
+            git clone https://github.com/lucadora0/dicoding-js-expert-final.git .
+          fi
+
+          # Install dependencies
+          npm install
+
+          # Run database migrations
+          npm run migrate up
+
+          # Restart application with PM2
+          if pm2 describe forum-api > /dev/null 2>&1; then
+            pm2 restart forum-api
+          else
+            pm2 start npm --name "forum-api" -- run start
+            pm2 save
+          fi
+
+          # Show PM2 status
+          pm2 status
+        EOF
+
+    - name: Create .env file on VM
+      run: |
+        ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
+          cd /var/www/forum-api
+          echo "HOST=${{ secrets.HOST }}" > .env
+          echo "PORT=${{ secrets.PORT }}" >> .env
+          echo "PGHOST=${{ secrets.PGHOST }}" >> .env
+          echo "PGPORT=${{ secrets.PGPORT }}" >> .env
+          echo "PGUSER=${{ secrets.PGUSER }}" >> .env
+          echo "PGPASSWORD=${{ secrets.PGPASSWORD }}" >> .env
+          echo "PGDATABASE=${{ secrets.PGDATABASE }}" >> .env
+          echo "ACCESS_TOKEN_KEY=${{ secrets.ACCESS_TOKEN_KEY }}" >> .env
+          echo "REFRESH_TOKEN_KEY=${{ secrets.REFRESH_TOKEN_KEY }}" >> .env
+          echo "ACCESS_TOKEN_AGE=${{ secrets.ACCESS_TOKEN_AGE }}" >> .env
+        EOF
+
+    - name: Restart Application
+      run: |
+        ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          cd /var/www/forum-api
+          if pm2 describe forum-api > /dev/null 2>&1; then
+            pm2 restart forum-api
+          else
+            pm2 start npm --name "forum-api" -- run start
+            pm2 save
+          fi
+          pm2 status
+        EOF
+
+    - name: Deployment Status
+      run: echo "Deployment completed successfully!"
